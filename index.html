@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arseny Portfolio</title>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      padding: 40px;
+      background: #111;
+      text-align: center;
+      letter-spacing: 2px;
+      position: relative;
+    }
+    header h1 {
+      display: inline-block;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0;
+    }
+    header h1 .spacer {
+      display: inline-block;
+      width: 1.2ch;
+    }
+    header .ph {
+      font-size: 1rem;
+      color: #aaa;
+      vertical-align: super;
+      margin-left: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+      background: #111;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    /* Intro section */
+    .intro-section {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 60px 20px;
+      background: #000;
+      text-align: left;
+    }
+    .intro-section img {
+      width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      cursor: zoom-in;
+      margin-left: 20px;
+    }
+    .intro-section .quote p {
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 480px;
+    }
+    .intro-section .quote p + p {
+      margin-top: 20px;
+      font-style: normal;
+      padding-left: 40px;
+    }
+
+    /* Новая галерея в плитке */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      background: #000;
+    }
+    .photo {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      aspect-ratio: 2/3;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      animation: fadeIn 0.5s ease-out forwards;
+      opacity: 0;
+    }
+    .photo:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+    }
+    .photo::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .photo:hover::before {
+      opacity: 1;
+    }
+    .photo::after {
+      content: attr(data-index);
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+      font-size: 1.2rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .photo:hover::after {
+      opacity: 1;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    .photo:nth-child(1) { animation-delay: 0.1s; }
+    .photo:nth-child(2) { animation-delay: 0.2s; }
+    .photo:nth-child(3) { animation-delay: 0.3s; }
+    .photo:nth-child(4) { animation-delay: 0.4s; }
+    .photo:nth-child(5) { animation-delay: 0.5s; }
+    .photo:nth-child(6) { animation-delay: 0.6s; }
+    .photo:nth-child(7) { animation-delay: 0.7s; }
+    .photo:nth-child(8) { animation-delay: 0.8s; }
+
+    /* Price cards */
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin: 60px 0 20px;
+    }
+    .price-section {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding: 20px;
+      background: #000;
+    }
+    .price-card {
+      width: 300px;
+      height: 450px;
+      border-radius: 15px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .price-card:hover {
+      transform: translateY(-5px);
+    }
+    .price-card .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.75);
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .price-card:hover .overlay {
+      opacity: 1;
+    }
+    .price-card .overlay h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+    .price-card .overlay p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* Booking */
+    .booking-section {
+      background: #111;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .booking-section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .booking-section form {
+      max-width: 500px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .booking-section input,
+    .booking-section textarea {
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .booking-section button {
+      padding: 15px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      background: #000;
+      color: #888;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Modal / Zoom */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      z-index: 1000;
+    }
+    .modal.show {
+      display: flex;
+    }
+    .modal img {
+      max-width: 90vw;
+      max-height: 90vh;
+      transition: transform 0.3s ease;
+      cursor: grab;
+    }
+    .arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: #fff;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .arrow.left { left: 20px; }
+    .arrow.right { right: 20px; }
+  </style>
+</head>
+<body>
+
+  <header class="animate__animated animate__fadeInDown">
+    <h1>ARSENY<span class="spacer"></span>FRIGA<span class="ph">PH</span></h1>
+  </header>
+
+  <nav>
+    <a href="#gallery">Работы</a>
+    <a href="https://instagram.com/arsenyph" target="_blank">Instagram</a>
+    <a href="#booking">Запись</a>
+  </nav>
+
+  <!-- Intro -->
+  <section class="intro-section">
+    <img src="images/arseny.jpg" id="portrait" alt="Arseny" />
+    <div class="quote">
+      <p>
+        «Фотография — не о красоте. Она о вас. Настоящая, живая. Я не ловлю позу — я слышу человека.
+        Потому что важен не кадр. Важно, чтобы вы в нём были собой.»
+      </p>
+      <p>
+        Меня зовут Арсений. Я фотограф, который не просто ловит моменты — я умею чувствовать. Моя задача —
+        не сделать “красивый кадр”, а показать человека настоящим. Без масок, без ожиданий, без давления.
+        Только вы и атмосфера. Если вы ищете кадры с душой и эмоцией, с живым портретом — я рядом.
+      </p>
+    </div>
+  </section>
+
+  <!-- Обновлённая галерея -->
+  <section class="gallery" id="gallery">
+    <div class="photo" style="background-image:url('images/01.jpg')" data-full="images/01.jpg" data-index="1"></div>
+    <div class="photo" style="background-image:url('images/02.jpg')" data-full="images/02.jpg" data-index="2"></div>
+    <div class="photo" style="background-image:url('images/03.jpg')" data-full="images/03.jpg" data-index="3"></div>
+    <div class="photo" style="background-image:url('images/04.jpg')" data-full="images/04.jpg" data-index="4"></div>
+    <div class="photo" style="background-image:url('images/05.jpg')" data-full="images/05.jpg" data-index="5"></div>
+    <div class="photo" style="background-image:url('images/06.jpg')" data-full="images/06.jpg" data-index="6"></div>
+    <div class="photo" style="background-image:url('images/07.jpg')" data-full="images/07.jpg" data-index="7"></div>
+    <div class="photo" style="background-image:url('images/08.JPG')" data-full="images/08.JPG" data-index="8"></div>
+  </section>
+
+  <!-- Price cards -->
+  <h2 class="section-title">Стили съёмки</h2>
+  <section class="price-section">
+    <div class="price-card" style="background-image:url('images/portrait.jpg')">
+      <div class="overlay">
+        <h3>Портретная съёмка</h3>
+        <p>от 7000₽/час<br>Это про вас — живых, с настроением и характером.<br>
+           Ретушь: 200₽/фото<br>Стилист: от 10000₽<br>Визажист: от 7000₽</p>
+      </div>
+    </div>
+    <div class="price-card" style="background-image:url('images/lovestory.jpg')">
+      <div class="overlay">
+        <h3>Love Story</h3>
+        <p>от 9000₽/час<br>Это история про вас — в касании, во взгляде...<br>
+           Ретушь, стилист и визажист — по желанию</p>
+      </div>
+    </div>
+    <div class="price-card" style="background-image:url('images/concept.jpg')">
+      <div class="overlay">
+        <h3>Концептуальная съёмка</h3>
+        <p>от 75000₽<br>Индивидуальная идея, стиль, арт или журнал.<br>
+           Ретушь, стилист, визажист — включены.<br>Аренда студии — оплачивается отдельно.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section class="booking-section" id="booking">
+    <h2>Book a Photoshoot</h2>
+    <form>
+      <input type="text"     placeholder="Your Name"     required />  
+      <input type="email"    placeholder="Your Email"    required />  
+      <textarea placeholder="Tell me about your idea..." rows="5"></textarea>  
+      <button type="submit">Send Request</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>&copy; 2025 Arseny | All rights reserved.</footer>
+
+  <!-- Modal / Zoom -->
+  <div class="modal" id="modal">
+    <button class="arrow left"  id="prevBtn">←</button>
+    <img    id="modalImage" src="" alt="Zoomed image"/>
+    <button class="arrow right" id="nextBtn">→</button>
+  </div>
+  <script>
+    const modal      = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const photos     = document.querySelectorAll('.photo');
+    const portrait   = document.getElementById('portrait');
+    const prevBtn    = document.getElementById('prevBtn');
+    const nextBtn    = document.getElementById('nextBtn');
+    let zoomed       = false;
+    let currentIndex = 0;
+    let offsetX = 0, offsetY = 0, startX, startY;
+
+    function openModal(i, src) {
+      currentIndex = i;
+      modalImage.src = src;
+      modalImage.style.transform = 'scale(1) translate(0,0)';
+      modalImage.style.cursor = 'zoom-in';
+      modal.classList.add('show');
+      zoomed = false;
+    }
+    photos.forEach((p, i) =>
+      p.addEventListener('click', () => openModal(i, p.getAttribute('data-full')))
+    );
+    portrait.addEventListener('click', () =>
+      openModal(-1, portrait.src)
+    );
+
+    modalImage.addEventListener('click', e => {
+      e.stopPropagation();
+      const r = modalImage.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      if (!zoomed) {
+        offsetX = -(x - r.width/2);
+        offsetY = -(y - r.height/2);
+        modalImage.style.transform = `scale(2) translate(${offsetX}px,${offsetY}px)`;
+        modalImage.style.cursor = 'grab';
+        zoomed = true;
+      } else {
+        modalImage.style.transform = 'scale(1) translate(0,0)';
+        modalImage.style.cursor = 'zoom-in';
+        zoomed = false;
+      }
+    });
+
+    modalImage.addEventListener('mousedown', e => {
+      if (!zoomed) return;
+      startX = e.clientX; startY = e.clientY;
+      modalImage.style.cursor = 'grabbing';
+    });
+    document.addEventListener('mousemove', e => {
+      if (!zoomed || startX === undefined) return;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      modalImage.style.transform =
+        `scale(2) translate(${offsetX + dx}px,${offsetY + dy}px)`;
+    });
+    document.addEventListener('mouseup', () => {
+      if (!zoomed || startX === undefined) return;
+      offsetX += (event.clientX - startX);
+      offsetY += (event.clientY - startY);
+      startX = startY = undefined;
+      modalImage.style.cursor = 'grab';
+    });
+
+    modal.addEventListener('click', () => {
+      modal.classList.remove('show');
+      modalImage.src = '';
+      zoomed = false;
+    });
+
+    function showImage(idx) {
+      if (idx === -1) return;
+      currentIndex = (idx + photos.length) % photos.length;
+      modalImage.src = photos[currentIndex].getAttribute('data-full');
+      modalImage.style.transform = 'scale(1) translate(0,0)';  
+      modalImage.style.cursor = 'zoom-in';  
+      zoomed = false;  
+    }  
+    prevBtn.addEventListener('click', e => { e.stopPropagation(); showImage(currentIndex - 1); });  
+    nextBtn.addEventListener('click', e => { e.stopPropagation(); showImage(currentIndex + 1); });  
+    document.addEventListener('keydown', e => {  
+      if (!modal.classList.contains('show')) return;  
+      if (e.key === 'ArrowRight') showImage(currentIndex + 1);  
+      if (e.key === 'ArrowLeft')  showImage(currentIndex - 1);  
+      if (e.key === 'Escape')     modal.classList.remove('show');  
+    });  
+  </script>  
+</body>  
+</html>
